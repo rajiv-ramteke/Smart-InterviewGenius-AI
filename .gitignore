@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Environment Variables (KEEP SECRET!)
+.env
+.env.local
+.env.production
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Vite
+.vite/
