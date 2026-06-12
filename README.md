@@ -1,3 +1,12 @@
+---
+title: Smart Interview Genius AI
+emoji: 🚀
+colorFrom: blue
+colorTo: purple
+sdk: docker
+pinned: false
+---
+
 # Smart InterviewGenius AI
 
 Welcome to **Smart InterviewGenius AI**, a modern, AI-powered interview preparation application. This tool helps you prepare for interviews by generating personalized technical and behavioral questions based on your resume.
