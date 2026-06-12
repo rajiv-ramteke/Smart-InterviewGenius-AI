@@ -33,7 +33,7 @@ Welcome to **Smart InterviewGenius AI**, a modern, AI-powered interview preparat
 ## Acknowledgements
 This project was proudly developed by **Rajiv**, featuring a custom-built user interface and design system.
 
-Special thanks and credits to the original open-source developers and educational repositories that served as a reference for the underlying application architecture. The open-source community's contributions made this learning journey and project possible.
+Special thanks and credits to [ankurdotio/interview-ai-yt](https://github.com/ankurdotio/interview-ai-yt) which served as a reference for the underlying application architecture and logic. The open-source community's contributions made this learning journey and project possible.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
