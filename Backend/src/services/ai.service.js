@@ -199,8 +199,8 @@ Job Description: ${jobDescription}
 
 Important constraints:
 1. Calculate the 'matchScore' (0-100) strictly based on how well the candidate's resume and skills match the job description.
-2. Generate exactly 10 PURELY technical questions for the 'technicalQuestions' array (e.g. coding, architecture, tools).
-3. Generate exactly 10 PURELY behavioral questions for the 'behavioralQuestions' array (e.g. soft skills, past experiences, situational).
+2. Generate exactly 5 PURELY technical questions for the 'technicalQuestions' array (e.g. coding, architecture, tools).
+3. Generate exactly 5 PURELY behavioral questions for the 'behavioralQuestions' array (e.g. soft skills, past experiences, situational).
 4. Generate exactly 5 multiple-choice questions for the 'technicalQuiz' array based on the job requirements. Provide 4 options and the correct answer.
 5. DO NOT mix technical questions into the behavioral section or vice versa. Keep them strictly separated.
 
