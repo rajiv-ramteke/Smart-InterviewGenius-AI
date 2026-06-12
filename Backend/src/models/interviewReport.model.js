@@ -64,6 +64,23 @@ const preparationPlanSchema = new mongoose.Schema({
     } ]
 })
 
+const technicalQuizSchema = new mongoose.Schema({
+    question: {
+        type: String,
+        required: [ true, "Quiz question is required" ]
+    },
+    options: [ {
+        type: String,
+        required: [ true, "Options are required" ]
+    } ],
+    correctAnswer: {
+        type: String,
+        required: [ true, "Correct answer is required" ]
+    }
+}, {
+    _id: false
+})
+
 const interviewReportSchema = new mongoose.Schema({
     jobDescription: {
         type: String,
@@ -82,6 +99,7 @@ const interviewReportSchema = new mongoose.Schema({
     },
     technicalQuestions: [ technicalQuestionSchema ],
     behavioralQuestions: [ behavioralQuestionSchema ],
+    technicalQuiz: [ technicalQuizSchema ],
     skillGaps: [ skillGapSchema ],
     preparationPlan: [ preparationPlanSchema ],
     user: {

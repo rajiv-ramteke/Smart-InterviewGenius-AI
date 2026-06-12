@@ -1,10 +1,12 @@
-# Smart InterviewGenius AI
+# Frontend Development
 
-This is your custom AI-powered interview preparation application!
+This directory contains the React (Vite) frontend for Smart InterviewGenius AI.
 
-## Features
-- AI-generated interview questions based on your resume.
-- Smart feedback and scoring.
+For full project setup instructions, features, and credits, please see the [Main README](../README.md) in the root directory.
 
-## How to run
-- `npm run dev` to start the frontend server.
+## Running Locally
+
+To start the development server:
+```bash
+npm run dev
+```

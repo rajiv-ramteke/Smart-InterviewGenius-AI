@@ -1,0 +1,10 @@
+{
+  "name": "smart-interview-genius-ai-root",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix Frontend\" \"npm run dev --prefix Backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

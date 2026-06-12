@@ -7,7 +7,19 @@ const Protected = ({children}) => {
 
 
     if(loading){
-        return (<main><h1>Loading...</h1></main>)
+        return (
+            <main style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+                backgroundColor: '#0d1117',
+                color: '#e6edf3',
+                fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            }}>
+                <h2>Loading...</h2>
+            </main>
+        )
     }
 
     if(!user){

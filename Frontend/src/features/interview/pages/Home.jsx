@@ -2,26 +2,62 @@ import React, { useState, useRef } from 'react'
 import "../style/home.scss"
 import { useInterview } from '../hooks/useInterview.js'
 import { useNavigate } from 'react-router'
+import { useAuth } from '../../auth/hooks/useAuth'
 
 const Home = () => {
 
-    const { loading, generateReport,reports } = useInterview()
-    const [ jobDescription, setJobDescription ] = useState("")
-    const [ selfDescription, setSelfDescription ] = useState("")
+    const { loading, generateReport, reports } = useInterview()
+    const { user, handleLogout } = useAuth()
+    const [jobDescription, setJobDescription] = useState("")
+    const [selfDescription, setSelfDescription] = useState("")
+    const [selectedFile, setSelectedFile] = useState(null)
+    const [error, setError] = useState("")
     const resumeInputRef = useRef()
 
     const navigate = useNavigate()
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            setSelectedFile(file)
+            setError("")
+        }
+    }
+
+    const handleRemoveFile = () => {
+        setSelectedFile(null)
+        resumeInputRef.current.value = ""
+    }
+
     const handleGenerateReport = async () => {
-        const resumeFile = resumeInputRef.current.files[ 0 ]
-        const data = await generateReport({ jobDescription, selfDescription, resumeFile })
-        navigate(`/interview/${data._id}`)
+        if (!jobDescription.trim()) {
+            setError("Please enter a Job Description before generating.")
+            return
+        }
+        if (!selectedFile && !selfDescription.trim()) {
+            setError("Please upload a Resume PDF or write a Self Description.")
+            return
+        }
+        setError("")
+        const data = await generateReport({ jobDescription, selfDescription, resumeFile: selectedFile })
+        if (data && data._id) {
+            navigate(`/interview/${data._id}`)
+        } else if (data && data.error) {
+            setError(`Failed: ${data.error}`)
+        } else {
+            setError("Failed to generate report. Please check your internet and try again.")
+        }
+    }
+
+    const onLogout = async () => {
+        await handleLogout()
+        navigate('/login')
     }
 
     if (loading) {
         return (
             <main className='loading-screen'>
-                <h1>Loading your interview plan...</h1>
+                <h1>⏳ Generating your interview plan... (may take ~30s)</h1>
             </main>
         )
     }
@@ -29,9 +65,18 @@ const Home = () => {
     return (
         <div className='home-page'>
 
+            {/* Top Navbar */}
+            <nav className='top-navbar'>
+                <span className='top-navbar__brand'>🎯 Smart InterviewGenius AI</span>
+                <div className='top-navbar__right'>
+                    {user && <span className='top-navbar__user'>👤 {user.username}</span>}
+                    <button className='top-navbar__logout' onClick={onLogout}>Logout</button>
+                </div>
+            </nav>
+
             {/* Page Header */}
             <header className='page-header'>
-                <h1>Create Your Custom <span className='highlight'>Interview Plan</span></h1>
+                <h1>Welcome to <span className='highlight'>Smart InterviewGenius AI</span></h1>
                 <p>Let our AI analyze the job requirements and your unique profile to build a winning strategy.</p>
             </header>
 
@@ -75,14 +120,26 @@ const Home = () => {
                                 Upload Resume
                                 <span className='badge badge--best'>Best Results</span>
                             </label>
-                            <label className='dropzone' htmlFor='resume'>
-                                <span className='dropzone__icon'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 16 12 12 8 16" /><line x1="12" y1="12" x2="12" y2="21" /><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" /></svg>
-                                </span>
-                                <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
-                                <p className='dropzone__subtitle'>PDF or DOCX (Max 5MB)</p>
-                                <input ref={resumeInputRef} hidden type='file' id='resume' name='resume' accept='.pdf,.docx' />
-                            </label>
+
+                            {selectedFile ? (
+                                <div className='dropzone dropzone--selected'>
+                                    <span className='dropzone__icon' style={{color: '#22c55e'}}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                    </span>
+                                    <p className='dropzone__title' style={{color: '#22c55e'}}>✅ {selectedFile.name}</p>
+                                    <p className='dropzone__subtitle'>{(selectedFile.size / 1024).toFixed(0)} KB</p>
+                                    <button type='button' onClick={handleRemoveFile} className='dropzone__remove'>Remove</button>
+                                </div>
+                            ) : (
+                                <label className='dropzone' htmlFor='resume'>
+                                    <span className='dropzone__icon'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+                                    </span>
+                                    <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
+                                    <p className='dropzone__subtitle'>PDF only (Max 3MB)</p>
+                                </label>
+                            )}
+                            <input ref={resumeInputRef} onChange={handleFileChange} hidden type='file' id='resume' name='resume' accept='.pdf' />
                         </div>
 
                         {/* OR Divider */}
@@ -113,6 +170,7 @@ const Home = () => {
                 {/* Card Footer */}
                 <div className='interview-card__footer'>
                     <span className='footer-info'>AI-Powered Strategy Generation &bull; Approx 30s</span>
+                    {error && <p style={{color: '#ff6b6b', fontSize: '0.85rem', margin: '0 1rem'}}>{error}</p>}
                     <button
                         onClick={handleGenerateReport}
                         className='generate-btn'>

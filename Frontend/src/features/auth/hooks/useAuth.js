@@ -15,8 +15,9 @@ export const useAuth = () => {
         try {
             const data = await login({ email, password })
             setUser(data.user)
+            return true;
         } catch (err) {
-
+            throw err
         } finally {
             setLoading(false)
         }
@@ -25,10 +26,10 @@ export const useAuth = () => {
     const handleRegister = async ({ username, email, password }) => {
         setLoading(true)
         try {
-            const data = await register({ username, email, password })
-            setUser(data.user)
+            await register({ username, email, password })
+            return true;
         } catch (err) {
-
+            throw err
         } finally {
             setLoading(false)
         }
@@ -37,10 +38,10 @@ export const useAuth = () => {
     const handleLogout = async () => {
         setLoading(true)
         try {
-            const data = await logout()
+            await logout()
             setUser(null)
         } catch (err) {
-
+            console.error(err)
         } finally {
             setLoading(false)
         }
