@@ -30,6 +30,40 @@ Welcome to **Smart InterviewGenius AI**, a modern, AI-powered interview preparat
 2. Ensure you have run `npm install`.
 3. Start the development server with `npm run dev`.
 
+## File Structure
+
+The project is organized into two main workspaces: **Backend** (Node.js/Express) and **Frontend** (React/Vite).
+
+```text
+Smart InterviewGenius AI/
+├── Backend/                 # Node.js & Express server
+│   ├── .env                 # Environment variables
+│   ├── server.js            # Server entry point
+│   └── src/
+│       ├── app.js           # Express app setup
+│       ├── config/          # Configurations
+│       ├── controllers/     # Request handlers
+│       ├── middlewares/     # Custom middleware
+│       ├── models/          # Database schemas
+│       ├── routes/          # API routes
+│       └── services/        # Core business logic (AI integration)
+├── Frontend/                # React & Vite application
+│   ├── index.html           # Main HTML entry point
+│   ├── public/              # Static assets
+│   └── src/                 # React source code
+│       ├── main.jsx         # React DOM rendering entry point
+│       ├── App.jsx          # Main application component
+│       ├── app.routes.jsx   # React Router definitions
+│       ├── style/           # Global SCSS styles
+│       └── features/        # Feature-based component modules
+├── .dockerignore            
+├── .gitignore               
+├── Dockerfile               
+├── LICENSE                  
+├── package.json             
+└── README.md                
+```
+
 ## Acknowledgements
 This project was proudly developed by **Rajiv**, featuring a custom-built user interface and design system.
 
